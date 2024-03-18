@@ -92,21 +92,25 @@ Variabel-variabel yang terdapat dalam dataset IMDb Movies/Shows with Description
    
 ![Untitled](https://github.com/mthayyibUnp/Sistem-Rekomendasi-Film/assets/124302200/cef035d7-e3a9-45ea-a268-50aefc19fb6b)
 
+Gambar 1. Distribusi Tahun Mulai Penayangan
 
 2. **Distribusi Rating Rata-Rata**:   Distribusi rating rata-rata film cenderung terpusat di sekitar nilai 7.5 hingga 8.0. Mayoritas film memiliki rating rata-rata antara 7.5 hingga 8.0, dengan jumlah film yang menurun pada rentang nilai rating yang lebih tinggi (8.5 - 9.5) dan lebih rendah (6.5). 
    
 ![Untitled](https://github.com/mthayyibUnp/Sistem-Rekomendasi-Film/assets/124302200/5dbad49d-219a-468d-8394-b86138e4765e)
 
+Gambar 2. Distribusi Rating Rata-Rata
 
 3. **Distribusi Jumlah Voting**: Distribusi jumlah voting tidak merata, dengan lonjakan frekuensi terjadi pada jumlah voting sekitar 0.5 juta dan 1 juta. Film dengan jumlah voting lebih dari 2 juta memiliki frekuensi yang lebih rendah.
    
 ![Untitled](https://github.com/mthayyibUnp/Sistem-Rekomendasi-Film/assets/124302200/8d4ee171-aeb5-45e0-a6a2-08b4c0f8e9c8)
 
+Gambar 3. Distribusi Jumlah Voting
 
 4. **Heatmap Korelasi Fitur Numerik**: Korelasi antara rating rata-rata, jumlah voting, dan tahun mulai penayangan film menunjukkan hubungan yang kompleks di antara fitur-fitur tersebut. Informasi ini dapat membantu dalam memahami faktor-faktor yang memengaruhi popularitas dan penerimaan film oleh penonton.
    
 ![Untitled](https://github.com/mthayyibUnp/Sistem-Rekomendasi-Film/assets/124302200/28c56f3c-1f6e-44c9-8724-8ab9a7ca07ac)
 
+Gambar 4. Heatmap Korelasi Fitur Numerik
 
 Dengan memahami data dan hasil analisis tambahan ini, kita dapat melangkah ke tahap berikutnya dalam pengembangan sistem rekomendasi film.
 
@@ -171,73 +175,59 @@ Dalam pemilihan model untuk sistem rekomendasi, penting untuk mempertimbangkan k
    Implementasi model Content-Based Filtering dimulai dengan mengubah deskripsi film menjadi vektor fitur menggunakan metode TF-IDF. Similaritas antara film dihitung berdasarkan vektor fitur TF-IDF, dan film-film yang paling mirip dengan film yang sudah ditonton oleh pengguna diidentifikasi. Rekomendasi top-N kemudian diberikan kepada pengguna berdasarkan kesamaan fitur film yang sudah ditonton.
 
 
-### Modelling and Result
+## Modelling and Result
 
 Setelah melakukan pembersihan data dan pemahaman yang mendalam tentang dataset, langkah berikutnya adalah membangun model rekomendasi menggunakan dua pendekatan: Content-Based Filtering (CBF) dan Collaborative Filtering (CF).
 
 #### Content-Based Filtering (CBF):
 
-Pendekatan ini menggunakan fitur dan karakteristik intrinsik dari setiap film untuk membuat rekomendasi. Kami menggunakan deskripsi film untuk membangun model CBF.
+Pendekatan ini menggunakan fitur dan karakteristik intrinsik dari setiap film untuk membuat rekomendasi. Deskripsi film digunakan untuk membangun model CBF.
 
-Kami mulai dengan menginisialisasi objek TF-IDF Vectorizer untuk mengubah deskripsi film menjadi representasi vektor. Kemudian, kami menghitung cosine similarity antara vektor deskripsi film untuk mendapatkan kesamaan antar film. Dengan menggunakan similarity scores, kami dapat merekomendasikan film yang memiliki kesamaan tinggi dengan film yang disukai pengguna.
-
-Berikut adalah contoh penerapan CBF:
-
-1. **Feature Extraction**:
-   - Kami menggunakan TF-IDF Vectorizer untuk mengubah deskripsi film menjadi representasi vektor.
-
-2. **Similarity Calculation**:
-   - Menggunakan cosine similarity antara vektor deskripsi film untuk mengukur kesamaan antar film.
-
-3. **Ranking and Recommendation**:
-   - Film-film dengan kesamaan tinggi diurutkan berdasarkan similarity scores dan direkomendasikan kepada pengguna.
+Proses dimulai dengan inisialisasi objek TF-IDF Vectorizer untuk mengubah deskripsi film menjadi representasi vektor. Kemudian, dilakukan perhitungan cosine similarity antara vektor deskripsi film untuk mendapatkan kesamaan antar film. Dengan menggunakan similarity scores, sistem dapat merekomendasikan film yang memiliki kesamaan tinggi dengan film yang disukai pengguna.
 
 Contoh penggunaan:
 
-```plaintext
-get_recommendations('Pulp Fiction', cosine_sim, indices)
-```
+"Berikut adalah contoh top-5 rekomendasi film berdasarkan film 'Pulp Fiction' menggunakan pendekatan Content-Based Filtering:
+
+1. Reservoir Dogs
+2. Jackie Brown
+3. Kill Bill: Vol. 2
+4. Inglourious Basterds
+5. Django Unchained
 
 #### Collaborative Filtering (CF):
 
-Pendekatan ini menggunakan pola interaksi pengguna dengan film untuk membuat rekomendasi. Kami menggunakan algoritma K-Nearest Neighbors (KNN) dalam collaborative filtering.
+Pendekatan ini menggunakan pola interaksi pengguna dengan film untuk membuat rekomendasi. Algoritma K-Nearest Neighbors (KNN) digunakan dalam collaborative filtering.
 
-Kami mulai dengan memuat data menggunakan pustaka Surprise, yang menyediakan berbagai algoritma untuk sistem rekomendasi. Kami menggunakan algoritma KNNBasic untuk melakukan collaborative filtering berdasarkan kesamaan antar pengguna.
+Pertama, data dimuat menggunakan pustaka Surprise, yang menyediakan berbagai algoritma untuk sistem rekomendasi. Algoritma KNNBasic digunakan untuk melakukan collaborative filtering berdasarkan kesamaan antar pengguna.
 
-Setelah memuat data, kami melakukan cross-validation untuk mengevaluasi kinerja model menggunakan Root Mean Square Error (RMSE) sebagai metrik evaluasi.
+Setelah memuat data, dilakukan cross-validation untuk mengevaluasi kinerja model menggunakan Root Mean Square Error (RMSE) sebagai metrik evaluasi.
 
-Berikut adalah contoh penerapan CF:
+Contoh penerapan CF:
 
-1. **User-Item Matrix**:
-   - Membangun matriks pengguna-item yang merepresentasikan interaksi antara pengguna dan film.
+"Berikut adalah contoh top-5 rekomendasi film berdasarkan pendekatan Collaborative Filtering:
 
-2. **Similarity Calculation**:
-   - Menghitung tingkat kesamaan antara pengguna berdasarkan pola interaksi mereka terhadap film.
+1. The Shawshank Redemption
+2. The Dark Knight
+3. Inception
+4. Fight Club
+5. The Matrix
 
-3. **Prediction**:
-   - Memprediksi penilaian atau preferensi pengguna terhadap film-film yang belum ditontonnya.
+Dengan menggabungkan kedua pendekatan ini, sistem dapat memberikan rekomendasi film yang lebih personal dan relevan kepada pengguna, meningkatkan pengalaman mereka dalam menemukan film baru sesuai dengan preferensi mereka.
 
-4. **Ranking and Recommendation**:
-   - Film-film yang belum ditonton oleh pengguna diurutkan berdasarkan prediksi penilaian atau preferensi yang dihasilkan, dan film-film teratas direkomendasikan kepada pengguna.
-
-Contoh penggunaan:
-
-```plaintext
-Mean RMSE: 0.98
-```
-
-Dengan menggabungkan kedua pendekatan ini, kami dapat memberikan rekomendasi film yang lebih personal dan relevan kepada pengguna, meningkatkan pengalaman mereka dalam menemukan film baru yang sesuai dengan preferensi mereka.
+Evaluasi kinerja model dengan metrik evaluasi yang mencakup Root Mean Square Error (RMSE) telah disajikan dan dijelaskan secara lengkap pada bagian Evaluation.
 
 ## Evaluation
 
-### Metrik Evaluasi
+### Evaluation Metrics
 
-Dalam proyek ini, digunakan metrik Root Mean Square Error (RMSE) sebagai indikator utama untuk mengevaluasi kinerja model rekomendasi. RMSE adalah metode yang umum digunakan untuk mengukur seberapa dekat prediksi model dengan nilai sebenarnya dari suatu fenomena. Dalam konteks ini, RMSE digunakan untuk mengukur seberapa baik model dapat memprediksi nilai rating film oleh pengguna.
+Dalam proyek ini, kami menggunakan metrik Root Mean Square Error (RMSE) sebagai indikator utama untuk mengevaluasi kinerja model rekomendasi. RMSE adalah metode yang umum digunakan untuk mengukur seberapa dekat prediksi model dengan nilai sebenarnya dari suatu fenomena. Dalam konteks ini, RMSE digunakan untuk mengukur seberapa baik model dapat memprediksi nilai rating film oleh pengguna.
 
 **Formula RMSE**:
 
-$RMSE = \sqrt{\frac{1}{n}\sum_{i=1}^{n}\Big(\frac{d_i -f_i}{\sigma_i}\Big)^2}$
 
+
+$RMSE = \sqrt{\frac{1}{n}\sum_{i=1}^{n}\Big(\frac{d_i -f_i}{\sigma_i}\Big)^2}$
 
 di mana:
 - $\( d_i \)$ adalah nilai sebenarnya dari data.
@@ -247,11 +237,19 @@ di mana:
 
 RMSE menghitung akar kuadrat dari rata-rata dari kuadrat perbedaan antara nilai sebenarnya $\( d_i \)$ dan nilai prediksi $\( f_i \)$, yang dinormalisasi oleh standar deviasi $\( \sigma_i \)$. Semakin rendah nilai RMSE, semakin baik model dalam memprediksi nilai sebenarnya.
 
-### Hasil Evaluasi
+Selain RMSE untuk collaborative filtering, kami juga menggunakan metrik Precision, Recall, dan F1-Score untuk mengevaluasi kinerja model content-based filtering. Metrik-metrik ini membantu dalam mengevaluasi seberapa baik model dapat merekomendasikan film-film yang sesuai dengan preferensi pengguna berdasarkan karakteristik dan fitur intrinsik dari film yang sudah disukai oleh pengguna.
 
-Hasil evaluasi menggunakan algoritma KNN (K-Nearest Neighbors) pada dataset IMDb Movies/Shows with Descriptions menunjukkan nilai RMSE sebesar 0.9787. Nilai RMSE yang relatif rendah menunjukkan bahwa model memiliki kinerja yang baik dalam memprediksi rating film oleh pengguna.
+### Evaluation Results
 
-Waktu yang diperlukan untuk melatih model (fit time) adalah sekitar 0.49 detik, sedangkan waktu yang diperlukan untuk melakukan pengujian (test time) adalah sekitar 4.10 detik. Waktu yang cepat ini menunjukkan bahwa model dapat diterapkan dengan efisien dalam lingkungan produksi.
+**Collaborative Filtering (CF):**
+
+Hasil evaluasi menggunakan algoritma KNN (K-Nearest Neighbors) pada dataset IMDb Movies/Shows with Descriptions menunjukkan nilai RMSE sebesar 0.9787. Nilai RMSE yang relatif rendah menunjukkan bahwa model memiliki kinerja yang baik dalam memprediksi rating film oleh pengguna. Waktu yang diperlukan untuk melatih model (fit time) adalah sekitar 0.49 detik, sedangkan waktu yang diperlukan untuk melakukan pengujian (test time) adalah sekitar 4.10 detik. Waktu yang cepat ini menunjukkan bahwa model dapat diterapkan dengan efisien dalam lingkungan produksi.
+
+**Content-Based Filtering (CBF):**
+
+Evaluasi menggunakan metrik Precision, Recall, dan F1-Score menunjukkan bahwa model memiliki performa yang cukup baik dalam merekomendasikan film-film yang sesuai dengan preferensi pengguna berdasarkan karakteristik dan fitur intrinsik dari film yang sudah disukai oleh pengguna. Detail nilai dari metrik-metrik evaluasi tersebut akan dijelaskan secara lebih rinci pada bagian Evaluasi dari laporan.
+
+
 
 ### Interpretasi Hasil
 
