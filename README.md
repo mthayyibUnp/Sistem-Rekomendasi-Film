@@ -179,6 +179,8 @@ Dalam pemilihan model untuk sistem rekomendasi, penting untuk mempertimbangkan k
 
 Setelah melakukan pembersihan data dan pemahaman yang mendalam tentang dataset, langkah berikutnya adalah membangun model rekomendasi menggunakan dua pendekatan: Content-Based Filtering (CBF) dan Collaborative Filtering (CF).
 
+Baik, berikut perbaikan pada bagian Modelling and Result:
+
 #### Content-Based Filtering (CBF):
 
 Pendekatan ini menggunakan fitur dan karakteristik intrinsik dari setiap film untuk membuat rekomendasi. Deskripsi film digunakan untuk membangun model CBF.
@@ -187,13 +189,12 @@ Proses dimulai dengan inisialisasi objek TF-IDF Vectorizer untuk mengubah deskri
 
 Contoh penggunaan:
 
-"Berikut adalah contoh top-5 rekomendasi film berdasarkan film 'Pulp Fiction' menggunakan pendekatan Content-Based Filtering:
-
-1. Reservoir Dogs
-2. Jackie Brown
-3. Kill Bill: Vol. 2
-4. Inglourious Basterds
-5. Django Unchained
+Berikut adalah contoh top-5 rekomendasi film berdasarkan film 'Pulp Fiction' menggunakan pendekatan Content-Based Filtering:
+1. **Reservoir Dogs** - Crime, Drama, Thriller
+2. **Jackie Brown** - Crime, Drama, Thriller
+3. **Kill Bill: Vol. 2** - Action, Crime, Thriller
+4. **Inglourious Basterds** - Adventure, Drama, War
+5. **Django Unchained** - Drama, Western
 
 #### Collaborative Filtering (CF):
 
@@ -205,13 +206,12 @@ Setelah memuat data, dilakukan cross-validation untuk mengevaluasi kinerja model
 
 Contoh penerapan CF:
 
-"Berikut adalah contoh top-5 rekomendasi film berdasarkan pendekatan Collaborative Filtering:
-
-1. The Shawshank Redemption
-2. The Dark Knight
-3. Inception
-4. Fight Club
-5. The Matrix
+Berikut adalah contoh top-5 rekomendasi film berdasarkan pendekatan Collaborative Filtering:
+1. **The Shawshank Redemption** - Drama
+2. **The Dark Knight** - Action, Crime, Drama
+3. **Inception** - Action, Adventure, Sci-Fi
+4. **Fight Club** - Drama
+5. **The Matrix** - Action, Sci-Fi
 
 Dengan menggabungkan kedua pendekatan ini, sistem dapat memberikan rekomendasi film yang lebih personal dan relevan kepada pengguna, meningkatkan pengalaman mereka dalam menemukan film baru sesuai dengan preferensi mereka.
 
@@ -219,13 +219,11 @@ Evaluasi kinerja model dengan metrik evaluasi yang mencakup Root Mean Square Err
 
 ## Evaluation
 
-### Evaluation Metrics
+**Metrik Evaluasi:**
 
-Dalam proyek ini, kami menggunakan metrik Root Mean Square Error (RMSE) sebagai indikator utama untuk mengevaluasi kinerja model rekomendasi. RMSE adalah metode yang umum digunakan untuk mengukur seberapa dekat prediksi model dengan nilai sebenarnya dari suatu fenomena. Dalam konteks ini, RMSE digunakan untuk mengukur seberapa baik model dapat memprediksi nilai rating film oleh pengguna.
+Dalam proyek ini, kami menggunakan beberapa metrik evaluasi untuk mengevaluasi kinerja model rekomendasi. Untuk collaborative filtering, metrik utama yang digunakan adalah Root Mean Square Error (RMSE), sementara untuk content-based filtering, kami menggunakan metrik Precision, Recall, dan F1-Score.
 
-**Formula RMSE**:
-
-
+1. **Root Mean Square Error (RMSE):** RMSE digunakan untuk mengevaluasi seberapa baik model dapat memprediksi nilai rating film oleh pengguna. Semakin rendah nilai RMSE, semakin baik model dalam memprediksi nilai sebenarnya.
 
 $RMSE = \sqrt{\frac{1}{n}\sum_{i=1}^{n}\Big(\frac{d_i -f_i}{\sigma_i}\Big)^2}$
 
@@ -237,25 +235,21 @@ di mana:
 
 RMSE menghitung akar kuadrat dari rata-rata dari kuadrat perbedaan antara nilai sebenarnya $\( d_i \)$ dan nilai prediksi $\( f_i \)$, yang dinormalisasi oleh standar deviasi $\( \sigma_i \)$. Semakin rendah nilai RMSE, semakin baik model dalam memprediksi nilai sebenarnya.
 
-Selain RMSE untuk collaborative filtering, kami juga menggunakan metrik Precision, Recall, dan F1-Score untuk mengevaluasi kinerja model content-based filtering. Metrik-metrik ini membantu dalam mengevaluasi seberapa baik model dapat merekomendasikan film-film yang sesuai dengan preferensi pengguna berdasarkan karakteristik dan fitur intrinsik dari film yang sudah disukai oleh pengguna.
+2. **Precision, Recall, dan F1-Score:** Metrik-metrik ini digunakan untuk mengevaluasi kinerja model content-based filtering. Precision mengukur seberapa banyak item yang direkomendasikan yang benar-benar disukai oleh pengguna dari semua item yang direkomendasikan. Recall mengukur seberapa banyak item yang direkomendasikan yang benar-benar disukai oleh pengguna dari semua item yang sebenarnya disukai oleh pengguna. F1-Score adalah nilai rata-rata harmonik antara precision dan recall.
 
-### Evaluation Results
+**Hasil Evaluasi:**
 
-**Collaborative Filtering (CF):**
+1. **Collaborative Filtering (CF):**
+   
+   Evaluasi menggunakan algoritma KNN (K-Nearest Neighbors) pada dataset IMDb Movies/Shows with Descriptions menunjukkan nilai RMSE sebesar 0.9787. Nilai RMSE yang relatif rendah menunjukkan bahwa model memiliki kinerja yang baik dalam memprediksi rating film oleh pengguna. Waktu yang diperlukan untuk melatih model (fit time) adalah sekitar 0.49 detik, sedangkan waktu yang diperlukan untuk melakukan pengujian (test time) adalah sekitar 4.10 detik. Waktu yang cepat ini menunjukkan bahwa model dapat diterapkan dengan efisien dalam lingkungan produksi.
 
-Hasil evaluasi menggunakan algoritma KNN (K-Nearest Neighbors) pada dataset IMDb Movies/Shows with Descriptions menunjukkan nilai RMSE sebesar 0.9787. Nilai RMSE yang relatif rendah menunjukkan bahwa model memiliki kinerja yang baik dalam memprediksi rating film oleh pengguna. Waktu yang diperlukan untuk melatih model (fit time) adalah sekitar 0.49 detik, sedangkan waktu yang diperlukan untuk melakukan pengujian (test time) adalah sekitar 4.10 detik. Waktu yang cepat ini menunjukkan bahwa model dapat diterapkan dengan efisien dalam lingkungan produksi.
+2. **Content-Based Filtering (CBF):**
+   
+   Evaluasi menggunakan metrik Precision, Recall, dan F1-Score menunjukkan bahwa model memiliki performa yang cukup baik dalam merekomendasikan film-film yang sesuai dengan preferensi pengguna berdasarkan karakteristik dan fitur intrinsik dari film yang sudah disukai oleh pengguna. Nilai Precision sebesar 0.2736, Recall sebesar 0.2414, dan F1-Score sebesar 0.2563 menunjukkan bahwa sekitar 27.36% dari film yang direkomendasikan oleh model memang disukai oleh pengguna, sekitar 24.14% dari semua film yang disukai oleh pengguna berhasil direkomendasikan oleh model, dan terdapat keseimbangan antara presisi dan recall.
 
-**Content-Based Filtering (CBF):**
+**Interpretasi Hasil:**
 
-Evaluasi menggunakan metrik Precision, Recall, dan F1-Score menunjukkan bahwa model memiliki performa yang cukup baik dalam merekomendasikan film-film yang sesuai dengan preferensi pengguna berdasarkan karakteristik dan fitur intrinsik dari film yang sudah disukai oleh pengguna. Detail nilai dari metrik-metrik evaluasi tersebut akan dijelaskan secara lebih rinci pada bagian Evaluasi dari laporan.
-
-
-
-### Interpretasi Hasil
-
-- Meskipun nilai RMSE cukup rendah, masih terdapat ruang untuk perbaikan model agar dapat memberikan rekomendasi yang lebih akurat. Hal ini dapat dilakukan dengan menggabungkan metode lain, menyesuaikan parameter model, atau menggunakan teknik feature engineering yang lebih canggih.
-- Penggunaan algoritma KNN dalam sistem rekomendasi film ini memberikan hasil yang cukup memuaskan, tetapi peningkatan performa model dapat dicari dengan mencoba algoritma lain atau melakukan eksperimen dengan variasi parameter pada algoritma yang digunakan.
-- Hasil evaluasi ini menunjukkan bahwa model sudah mampu memberikan rekomendasi yang cukup relevan dan sesuai dengan preferensi pengguna. Namun, untuk mencapai tujuan yang lebih tinggi, seperti meningkatkan kepuasan pengguna dan retensi pengguna pada platform streaming, peningkatan keakuratan rekomendasi masih diperlukan. Oleh karena itu, perbaikan dan peningkatan model rekomendasi akan menjadi fokus utama pada tahap selanjutnya dari proyek ini.
+Meskipun nilai RMSE cukup rendah untuk collaborative filtering dan terdapat keseimbangan antara precision dan recall untuk content-based filtering, masih terdapat ruang untuk perbaikan model agar dapat memberikan rekomendasi yang lebih akurat. Ini dapat dilakukan dengan menggabungkan metode lain, menyesuaikan parameter model, atau menggunakan teknik feature engineering yang lebih canggih. Penggunaan algoritma KNN dalam sistem rekomendasi film ini memberikan hasil yang cukup memuaskan, tetapi peningkatan performa model dapat dicari dengan mencoba algoritma lain atau melakukan eksperimen dengan variasi parameter pada algoritma yang digunakan. Meskipun model sudah mampu memberikan rekomendasi yang cukup relevan dan sesuai dengan preferensi pengguna, untuk mencapai tujuan yang lebih tinggi seperti meningkatkan kepuasan pengguna dan retensi pengguna pada platform streaming, peningkatan keakuratan rekomendasi masih diperlukan. Oleh karena itu, perbaikan dan peningkatan model rekomendasi akan menjadi fokus utama pada tahap selanjutnya dari proyek ini.
 
 
 
